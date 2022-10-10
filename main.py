@@ -111,7 +111,6 @@ data = {
   },
 }
 
-for index, aim_date in enumerate(split_date()):
 if __name__ == '__main__':
   try:
     client = WeChatClient(app_id, app_secret)
