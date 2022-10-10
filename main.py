@@ -51,7 +51,7 @@ def get_memorial_days_count():
 
 # 春节倒计时
 def get_counter_left(aim_date):
-  # 为了经常填错日期的同学们
+  # 为了经常填错日期的同学
   if re.match(r'^\d{1,2}\-\d{1,2}$', aim_date):
     next = datetime.strptime(str(date.today().year) + "-" + aim_date, "%Y-%m-%d")
   elif re.match(r'^\d{2,4}\-\d{1,2}\-\d{1,2}$', aim_date):
@@ -62,7 +62,7 @@ def get_counter_left(aim_date):
     next = next.replace(year=next.year + 1)
   return '距离春节还有 ' + str((next - today).days) + ' 天。'
 
-# 彩虹屁 接口不稳定，所以失败的话会重新调用，直到成功
+# 接口不稳定，所以失败的话会重新调用，直到成功
 def get_words():
   # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
   words = requests.get("https://api.shadiao.pro/chp", timeout=100)
@@ -78,7 +78,7 @@ def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
 # 返回一个数组，循环产生变量
-def split_birthday():
+def split_date():
   return aim_date.split('\n')
 
 #aimtime = 
@@ -111,15 +111,7 @@ data = {
   },
 }
 
-for index, aim_date in enumerate(split_birthday()):
-  key_name = "birthday_left"
-  if index != 0:
-    key_name = key_name + "_%d" % index
-  data[key_name] = {
-    "value": '',#get_counter_left(aim_date),
-    "color": get_random_color()
-  }
-
+for index, aim_date in enumerate(split_date()):
 if __name__ == '__main__':
   try:
     client = WeChatClient(app_id, app_secret)
