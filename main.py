@@ -36,6 +36,7 @@ def get_weather():
     urlh = 'http://timor.tech/api/holiday/tts/tomorrow'
     resh = requests.get(urlh, timeout=100).json()
     holiday = "\n\n休息日的话.." + resh['tts']
+    holiday = holiday.replace('上班','上学')
     return text + holiday
 
 # 获取当前日期为星期几
