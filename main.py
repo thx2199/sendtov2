@@ -22,6 +22,13 @@ def get_english():
     note = r.json()['content'] + "\n" + r.json()['note']
     return note
 
+# 获取当前日期为星期几
+def get_week_day():
+  week_list = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+  week_day = week_list[datetime.date(today).weekday()]
+  return week_day
+
+
 def get_weather():
     url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
     res = requests.get(url, timeout=100).json()
@@ -33,17 +40,8 @@ def get_weather():
         text =  city + "明天有" + tomor['weather'] + "，" + name + "外出时记得携带雨具！气温是"
     else: text =  city + "明天是" + tomor['weather'] + "天喔，气温是"
     text = text + str(int(tomor['low'])) + '~' + str(int(tomor['high'])) + "℃，空气质量" + str(tomor['airQuality']) + "，空气湿度" + today['humidity'] + "，会呼呼地吹" + today['wind'] + "。"
-    urlh = 'http://timor.tech/api/holiday/tts/tomorrow'
-    resh = requests.get(urlh, timeout=100).json()
-    holiday = "\n\n休息日的话.." + resh['tts']
-    holiday = holiday.replace('上班','上学')
+    holiday = "\n\n休息日的话..今天是" + get_week_day() + '喔'
     return text + holiday
-
-# 获取当前日期为星期几
-def get_week_day():
-  week_list = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-  week_day = week_list[datetime.date(today).weekday()]
-  return week_day
 
 # 推送天数
 def get_memorial_days_count():
